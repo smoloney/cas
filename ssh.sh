@@ -21,4 +21,6 @@ if [ ${PHASE} -eq 2 ]; then
 
 	ssh root@arete "/usr/local/bin/raid_health.sh && cat /tmp/smart_report.tmp" | awk '/SMART/{print $0}' >> /tmp/caslog.txt
 fi
+
+echo "hello world"
 cat /tmp/caslog.txt
