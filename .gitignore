@@ -4,3 +4,4 @@ README.md
 
 log/
 secrets.py
+.DS_STORE
