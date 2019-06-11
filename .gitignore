@@ -6,3 +6,4 @@ log/
 secrets.py
 .DS_STORE
 chromedriver
+hosts

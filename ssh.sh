@@ -136,5 +136,9 @@ if [ "${PHASE}" = "ALL" ] || [ "${PHASE}" = "morrison" ]; then
 
 fi
 
+if [ ! -d "${log}/crooky"]; then
+	mkdir -p "${log}/crooky"
+fi
+
 
 echo "All done :).  Logs are located in ${log}"
