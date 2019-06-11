@@ -7,28 +7,6 @@
 127.0.0.1	localhost
 255.255.255.255	broadcasthost
 ::1             localhost
-###############
-#Trizic
-###############
-
-192.168.100.100 redis
-192.168.100.100 rabbitmq
-192.168.100.100 rethinkdb
-192.168.100.100 dynamodb
-192.168.100.100 mysql
-134.209.50.166 cloudkey
-192.168.1.1   router
-192.168.1.249  closetswitch
-192.168.1.243  ap3
-192.168.1.245  ap5
-192.168.1.246  ap2
-192.168.1.247  ap3
-192.168.1.248  ap1
-192.168.1.252  switch1
-192.168.1.253  switch2
-192.168.1.254  switch3
-192.168.1.222  dns
-165.22.130.9 digitalocean
 
 ################
 #Cal Academy
@@ -64,49 +42,6 @@
 10.26.62.46	dowser
 10.26.62.50	panasas
 10.26.62.120	avere
-##################
-#Viz Workstations
-##################
-10.26.62.175	alli
-10.26.62.176	averroes
-10.26.62.177	bullitt
-10.26.62.178	barger
-10.26.62.179	cady
-10.26.62.180	cannon
-10.26.62.181	cassini
-10.26.62.182	cellarius
-10.26.62.183	charley
-10.26.62.184	copernicus
-10.26.62.185	curtis
-10.26.62.186	davethebutcher
-10.26.62.187	ehrenfreund
-10.26.62.189	eyeballkid
-10.26.62.190	flamsteed
-10.26.62.191	fox
-10.26.62.192	freese
-10.26.62.193	halley
-10.26.62.194	hayes
-10.26.62.195	henry
-10.26.62.196	henwifi
-10.26.62.197	herschel
-10.26.62.198	hipparchus
-10.26.62.202	kehoe
-10.26.62.207	lola
-10.26.62.208	johnson
-10.26.62.209	mathewlaptop
-10.26.62.216	raidog
-10.26.62.220	rose
-10.26.62.222	sandbox
-10.26.62.225	smallchange
-10.26.62.228	squeash
-10.26.62.229	swank
-10.26.62.231	tully
-10.26.62.233	uncleviolet
-10.26.62.248	spencer
-10.26.62.250	procurve
-10.26.62.251	gateway
-10.26.62.252	switch
-10.26.62.253	switch2
-10.26.62.253	switch3
+
 
 
