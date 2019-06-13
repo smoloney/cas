@@ -5,5 +5,5 @@ README.md
 log/
 secrets.py
 .DS_STORE
-chromedriver
+chromedriver*
 hosts

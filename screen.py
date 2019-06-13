@@ -2,13 +2,37 @@ import time
 import secrets
 from selenium import webdriver
 def main():
-    driver = webdriver.Chrome('./chromedriver')
+    #Use for mac/linux
+    # driver = webdriver.Chrome('./chromedriver')
 
-    #driver = panasas(driver)
-    #driver = avere(driver)
-    driver = crooky(driver)
+    # Use for Windows
+    driver = webdriver.Chrome('./chromedriver.exe')
+
+
+    esxiServer= [ ["crooky", "3"], 
+    ["faye", "4"], 
+    ["bobbin", "5"], 
+    ["xserve1", "6"],
+     ["xserve2", "7"],
+    ["vdi01", "8"] ]
+
+    freeNasServer= [ ["arete", "10"], ["sprio", "18"] ]
+
+    synologyServer= [ ["togo", "15"], ["alma", "20"] ] 
+
+    for x in range(len(freeNasServer)):
+        driver = freeNas(driver, freeNasServer[x][0], freeNasServer[x][1])
+    
+
+    driver = panasas(driver)
+    driver = avere(driver)
+    for x in range(len(esxiServer)):
+        driver = esxi(driver, esxiServer[x][0], esxiServer[x][1])
+   
     driver.quit()
+
 def panasas(driver):
+     #Logs into panasas admin portal.  Grabs screenshots of main page, storage and hdd health.
     driver.get('http://10.26.62.50/login')
     driver.find_element_by_name("loginName").send_keys("admin")
     driver.find_element_by_name("loginPassword").send_keys("tlnsn!")
@@ -21,6 +45,7 @@ def panasas(driver):
     driver.save_screenshot('./log/panasas/panasas_storage1.png')
     driver.execute_script("window.scrollTo(0, 1080)") 
     driver.save_screenshot('./log/panasas/panasas_storage2.png')
+
     driver.get("https://10.26.62.50/html/monitoring/driveStats.htm")
     driver.save_screenshot('./log/panasas/panasas_hdd1.png')
     driver.execute_script("window.scrollTo(0, 700)") 
@@ -29,6 +54,7 @@ def panasas(driver):
     driver.save_screenshot('./log/panasas/panasas_hdd3.png')
     driver.execute_script("window.scrollTo(0, 2000)") 
     driver.save_screenshot('./log/panasas/panasas_hdd4.png')
+
     return driver
 
 def avere(driver):
@@ -37,34 +63,59 @@ def avere(driver):
     driver.find_element_by_id("password").send_keys(secrets.password)
     driver.find_element_by_name("OK").click()
     time.sleep(2)
+
     driver.save_screenshot('./log/avere/conditions1.png')
     driver.execute_script("window.scrollTo(0,1080)")
     driver.save_screenshot('./log/avere/conditions2.png')
     driver.find_element_by_xpath('//*[@id="wrap"]/div[4]/div[3]/ul/li[2]/a').click()
+
     driver.execute_script("window.scrollTo(0,300)")
     driver.save_screenshot('./log/avere/alert1.png')
     driver.execute_script("window.scrollTo(0,600)")
     driver.save_screenshot('./log/avere/alert2.png')
     return driver
 
-def crooky(driver):
-    driver.get('http://10.26.62.3')
+def esxi(driver, server, ip):
+    
+    driver.get('http://10.26.62.' + ip)
     time.sleep(2)
     driver.find_element_by_id('username').send_keys(secrets.esxiUname)
-    driver.find_element_by_id('password').send_keys(secrets.esxiPword)
+    if ("sever" == "vdi01"):
+        driver.find_element_by_id('password').send_keys(secrets.vdiPass)
+    else:
+        driver.find_element_by_id('password').send_keys(secrets.esxiPword)
     driver.find_element_by_id('submit').click()
-    time.sleep(7)
+    time.sleep(4)
 
-    driver.save_screenshot('./log/crooky/serverHealth.png')
+    driver.save_screenshot('./log/' + server + '/serverHealth.png')
 
-    driver.get('http://10.26.62.3/ui/#/host/vms')
+    driver.get('http://10.26.62.'+ ip + '/ui/#/host/vms')
     time.sleep(7)
-    driver.save_screenshot('./log/crooky/vmStatus.png')
+    driver.save_screenshot('./log/'+ server + '/vmStatus.png')
+    driver.get('http://10.26.62.' + ip + '/ui/#/host/storage/devices')
     time.sleep(7)
-    driver.get('http://10.26.62.3/ui/#/host/storage/devices')
-    driver.save_screenshot('./log/crooky/storage.png')
+    driver.save_screenshot('./log/' + server + '/storage.png')
+    
+    return driver
+
+
+def freeNas(driver, server, ip):
+    
+    driver.get('http://10.26.62.'+ ip)
+    time.sleep(2)
+    driver.find_element_by_css_selector('#mat-input-0').send_keys(secrets.freeNasUname)
+    driver.find_element_by_css_selector('#mat-input-1').send_keys(secrets.freeNasPword)
+    driver.find_element_by_id('signin_button').click()
+    driver.save_screenshot('./log/' + server +'/dashboard1.png')
+    driver.execute_script("window.scrollTo(0,600)")
+    driver.save_screenshot('./log/' + server +'/dashboard2.png')
+    
     return driver
     
+
+# def synology(driver, server, ip):
+#     driver
+
 main()
 
 
