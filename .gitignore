@@ -7,3 +7,4 @@ secrets.py
 .DS_STORE
 chromedriver*
 hosts
+ __pycache__/

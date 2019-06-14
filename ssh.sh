@@ -1,5 +1,5 @@
 #!/bin/bash -p
-
+EMAIL=smoloney@calacademy.org
 remove(){
 	echo $1
 	if [ -f "$log/$1" ]; then
@@ -140,5 +140,10 @@ if [ ! -d "${log}/crooky"]; then
 	mkdir -p "${log}/crooky"
 fi
 
+python3 screen.sy
+tarFile=$(date '+%m_%d_%Y').tar.gz
+tar -cvz  ${tarFile} log
+
+mailx -a tarFile -s "Server Health Logs" ${EMAIL}
 
 echo "All done :).  Logs are located in ${log}"

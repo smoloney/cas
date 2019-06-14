@@ -1,6 +1,10 @@
 import time
 import secrets
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 def main():
     #Use for mac/linux
     # driver = webdriver.Chrome('./chromedriver')
@@ -20,16 +24,20 @@ def main():
 
     synologyServer= [ ["togo", "15"], ["alma", "20"] ] 
 
-    for x in range(len(freeNasServer)):
-        driver = freeNas(driver, freeNasServer[x][0], freeNasServer[x][1])
+    
+    # for x in range(len(freeNasServer)):
+    #     driver = freeNas(driver, freeNasServer[x][0], freeNasServer[x][1])
     
 
-    driver = panasas(driver)
-    driver = avere(driver)
-    for x in range(len(esxiServer)):
-        driver = esxi(driver, esxiServer[x][0], esxiServer[x][1])
+    # driver = panasas(driver)
+    # driver = avere(driver)
+    # for x in range(len(esxiServer)):
+    #     driver = esxi(driver, esxiServer[x][0], esxiServer[x][1])
+    driver = synology(driver, 'togo', '15')
+    # for x in range (len(synologyServer)):
+    #     driver = synology(driver, synologyServer[x][0], synologyServer[x][1])
    
-    driver.quit()
+    # driver.quit()
 
 def panasas(driver):
      #Logs into panasas admin portal.  Grabs screenshots of main page, storage and hdd health.
@@ -113,8 +121,29 @@ def freeNas(driver, server, ip):
     return driver
     
 
-# def synology(driver, server, ip):
-#     driver
+def synology(driver, server, ip):
+    driver.implicitly_wait(3)
+    driver.get('http://10.26.62.'+ ip +':5000')
+    time.sleep(5)
+    driver.find_element_by_css_selector('#login_passwd').click()
+    driver.find_element_by_css_selector('#login_username').send_keys(secrets.synologyUname)
+    driver.find_element_by_css_selector('#login_passwd').send_keys(secrets.synologyPword)
+    driver.find_element_by_id('login-btn').click()
+
+    time.sleep(5)
+    # driver.find_element_by_xpath('//*[@id="ext-gen210"]').click()
+    # time.sleep(2)
+    # driver.find_element_by_xpath('//*[@id="ext-gen198"]').click()
+    # time.sleep(15)
+    # driver.save_screenshot('./log/'+server+'/overview.png')
+
+    driver.find_element_by_xpath('//*[@id="ext-gen210"]').click()
+    time.sleep(2)
+    driver.find_element_by_css_selector('#ext-gen199').click()
+    time.sleep(1)
+    driver.save_screenshot('./log/'+ server + 'drive1.png')
+    driver.find_element_by_css_selector('#ext-gen1336 > div > li:nth-child(3)').click()
+
 
 main()
 
