@@ -1,7 +1,7 @@
 #!/bin/bash -p
 
 remove(){
-	echo $1
+	
 	if [ -f "$log/$1" ]; then
 		rm ${log}/${1}
 	fi
@@ -41,12 +41,12 @@ fi
 if [ "${PHASE}" = "ALL" ] || [ "${PHASE}" = "spiro" ]; then
 
 	remove spiro.txt
-
+	mkdir -p log/spiro
 	printf " ----------\n Spiro\n ----------\n"
 	printf "################\n" >> ${log}/spiro.txt
 	printf "#	Spiro	     #\n" >> ${log}/spiro.txt
 	printf "################\n" >> ${log}/spiro.txt
-	printf "$(date)\n\n" >> ${log}/spiro.txt
+	printf "$(date)\n\n" >> ${log}/spiro/spiro.txt
 	spiro_and_arete spiro
 
 fi
@@ -54,12 +54,12 @@ fi
 if [ "${PHASE}" = "ALL" ] || [ "$PHASE" = "arete" ]; then
 
 	remove arete.txt
-
+	mkdir -p log/arete
 	printf " ----------\n Arete\n ----------\n"
 	printf "################\n" >> ${log}/arete.txt
 	printf "#	Arete	     #\n" >> ${log}/arete.txt
 	printf "################\n" >> ${log}/arete.txt
-	printf "$(date)\n\n" >> ${log}/arete.txt
+	printf "$(date)\n\n" >> ${log}/arete/arete.txt
 
 	spiro_and_arete arete
 
@@ -136,9 +136,23 @@ if [ "${PHASE}" = "ALL" ] || [ "${PHASE}" = "morrison" ]; then
 
 fi
 
-if [ ! -d "${log}/crooky"]; then
-	mkdir -p "${log}/crooky"
+if [ ! -d "${log}/arete" ]; then
+	mkdir -p "${log}/arete"
 fi
+if [ ! -d "${log}/spiro" ]; then
+	mkdir -p "${log}/spiro"
+fi
+mkdir -p log/crooky
+mkdir -p log/faye
+mkdir -p log/bobbin
+mkdir -p log/xserve1
+mkdir -p log/xserve2
+mkdir -p log/vdi01
+mkdir -p log/panasas
+mkdir -p log/avere
+# python3 screen.py
 
-
+zip -r logs.zip log
+uuencode logs.zip logs.zip | mailx -s "test" smoloney@calacademy.org
+# mailx -a logs.zip -s "Server logs" smoloney@calacademy.org
 echo "All done :).  Logs are located in ${log}"

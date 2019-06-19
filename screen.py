@@ -3,10 +3,10 @@ import secrets
 from selenium import webdriver
 def main():
     #Use for mac/linux
-    # driver = webdriver.Chrome('./chromedriver')
+    driver = webdriver.Chrome('./chromedriver')
 
     # Use for Windows
-    driver = webdriver.Chrome('./chromedriver.exe')
+    # driver = webdriver.Chrome('./chromedriver.exe')
 
 
     esxiServer= [ ["crooky", "3"], 
@@ -30,6 +30,7 @@ def main():
         driver = esxi(driver, esxiServer[x][0], esxiServer[x][1])
    
     driver.quit()
+    exit()
 
 def panasas(driver):
      #Logs into panasas admin portal.  Grabs screenshots of main page, storage and hdd health.
@@ -80,7 +81,7 @@ def esxi(driver, server, ip):
     driver.get('http://10.26.62.' + ip)
     time.sleep(2)
     driver.find_element_by_id('username').send_keys(secrets.esxiUname)
-    if ("sever" == "vdi01"):
+    if ("server" == "vdi01"):
         driver.find_element_by_id('password').send_keys(secrets.vdiPass)
     else:
         driver.find_element_by_id('password').send_keys(secrets.esxiPword)
